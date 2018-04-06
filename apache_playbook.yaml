@@ -6,7 +6,7 @@
   - name: Installing Apache and make sure the package is the latest
     yum: 
      name: httpd
-     state: latest
+     state: present
   - name: Starting Apache Service
     service: 
       name: httpd
