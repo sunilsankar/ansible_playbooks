@@ -1,0 +1,21 @@
+---
+- hosts: all
+  vars:
+  become_method: sudo
+  tasks:
+  - name: Installing Apache and make sure the package is the latest
+    yum: 
+     name: httpd
+     state: latest
+  - name: Starting Apache Service
+    service: 
+      name: httpd
+      state: started
+      enabled: yes
+  - name: Copying the static file - index.html
+    copy: src=index.html dest=/var/www/html mode=644
+    notify:
+      - Restart Apache Service
+  handlers:
+     - name: Restart Apache Service
+       service: name=httpd state=restarted
